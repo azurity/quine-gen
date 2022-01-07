@@ -37,7 +37,7 @@ def build():
         langs.append(line.strip().split('#'))
     for lang in langs:
         details.append([lang[0], subprocess.getoutput(
-            lang[1] + ' template ' + filename)])
+            lang[1] + ' template ' + filename).strip()])
     for i in range(len(langs)):
         exec_str = subprocess.check_output(
             langs[i][1] + ' exec', shell=True, input=bytes(details[(i + 1) % len(langs)][1], encoding='utf-8'))
@@ -74,7 +74,7 @@ def main():
         # temp = input()
         temp = ''
         for line in sys.stdin:
-            temp += line + '\n'
+            temp += line
         temp = temp.strip()
         exec_str = ''
         counter = 2

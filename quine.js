@@ -46,7 +46,7 @@ async function build() {
             let proc = child_process.exec(langs[i][1] + ' exec', (err, stdout) => {
                 resolve(stdout);
             });
-            proc.stdin.write(details[(i + 1) % langs.length][1][0]);
+            proc.stdin.write(details[(i + 1) % langs.length][1][0] + '\n');
             proc.stdin.end();
         });
         let exec_strs = exec_str.split('\n');
