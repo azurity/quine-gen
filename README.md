@@ -5,7 +5,7 @@ The generator tool is also write in multi-lang.
 
 ## HOW TO USE
 
-- First install the environment of the languages what you want to use.
+- First install the environment of the languages which you want to use.
 
 - Write the list file to configuring what language will be included.
 
