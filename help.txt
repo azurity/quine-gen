@@ -1,0 +1,9 @@
+options:
+    build <list file> <output file>
+        build the quine program & write to a file.
+    help
+        show this help info.
+    template <list file>
+        used internal. output the template of this language.
+    exec
+        used internal. generator the data part & exec part.
