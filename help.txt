@@ -7,3 +7,5 @@ options:
         used internal. output the template of this language.
     exec
         used internal. generator the data part & exec part.
+    anti-escape
+        used internal. anti escape character for format string.

@@ -17,7 +17,7 @@ function render(template, details) {
                 j += 1;
             }
             let item = details.get(template.slice(i + 1, i + j));
-            result += '"' + item[1] + details.get(item[3])[2] + '"';
+            result += '"' + item[1] + details.get(item[4])[3] + '"';
             i += j;
         } else {
             result += c;
@@ -52,6 +52,15 @@ async function build() {
         let exec_strs = exec_str.split('\n');
         details[i][1].push(exec_strs[0]);
         details[i][1].push(exec_strs.slice(1).join('\n').trim());
+        //
+        let antied = await new Promise((resolve,) => {
+            let proc = child_process.exec(langs[(i - 1 + langs.length) % langs.length][1] + ' anti-escape', (err, stdout) => {
+                resolve(stdout.trim());
+            });
+            proc.stdin.write(details[i][1][2] + '\n');
+            proc.stdin.end();
+        })
+        details[i][1].push(antied);
         details[i][1].push(details[(i + 1) % langs.length][0]);
     }
     let detail_dict = new Map(details);
@@ -108,6 +117,25 @@ function main() {
                 let final_part = `console.log(javascript,${args.join(',')})`;
                 console.log(exec_str);
                 console.log(final_part);
+            });
+            process.stdin.read();
+            break
+        case 'anti-escape':
+            process.stdin.on('data', (data) => {
+                let temp = data.toString('utf-8').trim();
+                let exec_str = '';
+                let args = [];
+                let i = 0;
+                while (i < temp.length) {
+                    let c = temp[i];
+                    if (c == '%') {
+                        exec_str += '%%';
+                    } else {
+                        exec_str += c;
+                    }
+                    i += 1;
+                }
+                console.log(exec_str);
             });
             process.stdin.read();
             break

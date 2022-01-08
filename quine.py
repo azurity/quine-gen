@@ -18,7 +18,7 @@ def render(template, details):
             while template[i+j] != '$':
                 j += 1
             item = details[template[i+1:i+j]]
-            result += '"' + item[1] + details[item[3]][2] + '"'
+            result += '"' + item[1] + details[item[4]][3] + '"'
             i += j
         else:
             result += c
@@ -44,6 +44,10 @@ def build():
         exec_strs = str(exec_str, encoding='utf-8').split('\n')
         details[i].append(exec_strs[0])
         details[i].append('\n'.join(exec_strs[1:]).strip())
+        #
+        antied = subprocess.check_output(
+            langs[(i - 1 + len(langs)) % len(langs)][1] + ' anti-escape', shell=True, input=bytes(details[i][3], encoding='utf-8'))
+        details[i].append(str(antied, encoding='utf-8').strip())
         details[i].append(details[(i + 1) % len(langs)][0])
     detail_dict = {}
     for d in details:
@@ -100,6 +104,25 @@ def main():
         final_part = f'print(python.format(chr(34),chr(10),{",".join(names)}))'
         print(exec_str)
         print(final_part)
+    elif sys.argv[1] == 'anti-escape':
+        temp = ''
+        for line in sys.stdin:
+            temp += line
+        temp = temp.strip()
+        exec_str = ''
+        counter = 2
+        names = []
+        i = 0
+        while i < len(temp):
+            c = temp[i]
+            if c == '{':
+                exec_str += '{{'
+            elif c == '}':
+                exec_str += '}}'
+            else:
+                exec_str += c
+            i += 1
+        print(exec_str)
     elif sys.argv[1] == 'build':
         build()
     elif sys.argv[1] == 'help':
