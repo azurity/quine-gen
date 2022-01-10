@@ -22,8 +22,11 @@ node quine.js build list codefile
 
 ## current support language & environment
 
+> c and some other compiled languages need bash for I/O redirection & execion control
+
 | language      | environment   | tool file     |
 |---------------|---------------|---------------|
+| c             | gcc (c99)     | quine.c       |
+| golang        | go 1.17       | quine.go      |
 | javascript    | nodejs        | quine.js      |
 | python        | python3       | quine.py      |
-

@@ -1,3 +1,4 @@
 c#./cc.bash quine.c#./cc.bash -
+golang#go run quine.go#./go.bash
 javascript#node quine.js#node -
 python#python quine.py#python -

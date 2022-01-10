@@ -110,8 +110,6 @@ def main():
             temp += line
         temp = temp.strip()
         exec_str = ''
-        counter = 2
-        names = []
         i = 0
         while i < len(temp):
             c = temp[i]
